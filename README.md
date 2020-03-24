@@ -1,6 +1,12 @@
 # Blades in the Dicebot
 A Discord bot custom made for Blades in the Dark.
 
+Simpler syntax and clearer results.
+Handles 0d, critical results and resistances rolls.
+Also has a cute name.
+
+Compatile with all bots, and works well with Sidekick due to non-overlapping syntax.
+
 If you've found any issues or improvements it could use, file a bug!
 
 ## How to install
@@ -23,3 +29,5 @@ The link will prompt you to authorize the bot on a server. Once the bot's author
 `! resist 2d6` Works as you'd expect. The only things the bot looks for is the letter 'r' (not case-sensitive) and the first integer (2) outside of a comment.
 
 `/help` Makes the bot repeat this set of instructions in the discord.
+
+
