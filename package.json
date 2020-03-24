@@ -1,0 +1,15 @@
+{
+  "name": "blades-bot",
+  "version": "1.0.0",
+  "description": "A dice rolling bot for Blades in The Dark games over Discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jordanclarkedev",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.0.2",
+    "dotenv": "^8.2.0"
+  }
+}
