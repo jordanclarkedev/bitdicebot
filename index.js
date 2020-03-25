@@ -93,17 +93,17 @@ bot.on("message", (msg)=>{
 
         case (msg.content.toLowerCase() === "!controlled"):
             msg.reply( position("controlled") );
-
+            break;
         case (msg.content.toLowerCase() === "!risky"):
             msg.reply( position("risky") );
-
+            break;
         case (msg.content.toLowerCase() === "!desperate"):
             msg.reply( position("desperate") );
-
+            break;
         //roll handling
         case (msg.content[0]=== "!"):
             msg.reply( roll(msg.content) );
-
+            break;
         case (msg.content.toLowerCase() === "/help"):
             msg.reply(`I am a bot for Blades in the Dark. Here's how to use me:
         !                   Use ! to get its attention.
@@ -119,6 +119,7 @@ bot.on("message", (msg)=>{
         !desperate          Lists consequences for Desperate actions.
 
         /help               Makes me say this again.
+            break;
         `);
     }
 });
