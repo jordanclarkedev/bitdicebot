@@ -28,7 +28,7 @@ The link will prompt you to authorize the bot on a server. Once the bot's author
 
 `! r 2  / comment` Anything after the slash will be included as a comment.
 
-`! resist 2d6` Works as you'd expect. So long as there's one integer outside of a comment, it'll work. The 'r' in 'resist' triggers a resistance roll.
+`! resist 2d6` Works as you'd expect.
 
 ### Tutorial Commands.
 
