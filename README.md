@@ -18,6 +18,8 @@ The link will prompt you to authorize the bot on a server. Once the bot's author
 
 ## Using it
 
+### Rolling dice
+
 `!`  Start a post with ! to get its attention.
 
 `! 2` The first number will make it roll that amount of d6s.
@@ -27,14 +29,23 @@ The link will prompt you to authorize the bot on a server. Once the bot's author
 `! r 2  / comment` Anything after the slash will be included as a comment.
 
 `! resist 2d6` Works as you'd expect. So long as there's one integer outside of a comment, it'll work. The 'r' in 'resist' triggers a resistance roll.
- 
-`!controlled` Lists consequences for Controlled *
 
-`!risky` Lists consequences for Risky actions *
+### Tutorial Commands.
 
-`!desperate` Lists consequences for Desperate actions. *
+`/help` or `!help` Makes the bot repeat this set of instructions in the discord. 
 
-`/help` Makes the bot repeat this set of instructions in the discord. *
+`!dice` Describes how to get more dice (push, assist, devil's bargain, group).
 
-No commands are case-sensitive. All commands with an aseterisk (*) are sensitive to whitespace.
+`!position` Describes position & effect.
 
+`!effect` Describes position & effect.
+
+`!group` Describes group actions.
+
+### GM References
+
+`!controlled` Lists consequences for Controlled
+
+`!risky` Lists consequences for Risky actions 
+
+`!desperate` Lists consequences for Desperate actions. 
