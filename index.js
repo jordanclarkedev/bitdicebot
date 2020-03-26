@@ -109,19 +109,16 @@ bot.on("message", (msg)=>{
             break;
         case (msg.content.toLowerCase() === "/help"):
             msg.reply(`I am a bot for Blades in the Dark. Here's how to use me:
-        !                   Use ! to get its attention.
         ! 2                 The first number will make it roll that amount of d6s.
         ! 2 r               Including the letter 'r' will make it perform a resistance roll.
         ! r 2  / comment    Anything after the slash will be included as a comment.
-
-        Note:
-        ! resist 2d6        Works as you'd expect. The only things the bot looks for is the letter 'r' (not case-sensitive) and the first integer outside of a comment.
+        ! 2d6 resist        Works as you'd expect.
         
         !controlled         Lists consequences for Controlled
         !risky              Lists consequences for Risky actions
         !desperate          Lists consequences for Desperate actions.
 
-        /help               Makes me say this again.`);
+        /help               Makes me say repeat this message. :)`);
             break;
     }
 });
