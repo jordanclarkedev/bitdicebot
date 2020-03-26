@@ -1,6 +1,6 @@
 {
-  "name": "blades-bot",
-  "version": "1.0.0",
+  "name": "bitdbot",
+  "version": "1.0.3",
   "description": "A dice rolling bot for Blades in The Dark games over Discord.",
   "main": "index.js",
   "scripts": {

@@ -1,55 +1,11 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 require('dotenv').config(); 
+const { helpEmbed, posEmbed, diceEmbed, groupEmbed, controlledEmbed, riskyEmbed, desperateEmbed} = require('./embeds.js'); 
 
 bot.on('ready', ()=>{    console.log("This bot is online");  });
 
 const token = process.env.API_KEY
-    
-const helpEmbed = new Discord.MessageEmbed();
-//Embed Setter.
-(function(){
-	helpEmbed
-	.setColor('#0099ff')
-	.setTitle('Help')
-	.setDescription(`Hey, I'm Blades in the Dicebot, here's how to use me:`)
-	.addFields(
-	{
-		name: `You say...`,
-		inline: true,
-		value: `! 2
-		! 2 r
-		! r 2  / comment
-		! resist 2d6`
-	},
-	{
-		name: `To...`,
-		inline: true,
-		value: `Roll 2 d6s.
-		Resistance roll of 2 d6s.
-		Add a comment.
-		Have a readable syntax.\n
-		`
-	},
-	{
-		name: `Show this message again:`,
-		value: `/help or !help`
-	},
-	{
-		name: `List possible consequences`,
-		value: `!controlled
-		!risky
-		!desperate`,
-		inline: true
-	},
-	{
-		inline: true,
-		name: `(For GMs)`,
-		value: `Lists consequences for Controlled
-		List consequences for Risky actions
-		Lists consequences for Desperate actions.`,
-	});
-}());
 
 
 const roll= (msg)=>{
@@ -64,7 +20,7 @@ const roll= (msg)=>{
 
     //Handling Error: No number given.
     if(     !/[0-9]/.test(msgString)    ){
-        return "You have my attention, but I'm not sure what to do.\nIf you don't know how I'm used, just say '/help'."
+        return "You have my attention, but I'm not sure what to do.\nIf you don't know how I'm used, you can always ask for /help'."
     }
 
     //Chucking all non-comment info into variables.
@@ -108,54 +64,40 @@ const roll= (msg)=>{
 }
 
 
-const position = (pos) => {
-    switch(pos){
-        case "controlled":
-            return `Consequences for Controlled:
-            Reduced Effect: -1 effect level
-            Worse Position: -1 position (can try again if failure)
-            Lost Opportunity: To try again, you'll need a new approach / action rating.
-            Complication: Immediate problem, 1 tick or +1 Heat.
-            Harm: Lesser Harm (level 1)`;
-            
-        case "risky":
-            return `Consequences for Risky:
-            Reduced Effect: -1 effect level
-            Worse Position: -1 position (can try again if failure)
-            Lost Opportunity: To try again, you'll need a new approach / action rating.
-            Complication: Immediate problem, 2 tick or +1 Heat.
-            Harm: Moderate Harm (level 2)`;
-            
-        case "desperate":
-            return `Consequences for Desperate:
-            Reduced Effect: -1 effect level
-            Worse Position: -1 position (can try again if failure)
-            Lost Opportunity: To try again, you'll need a new approach / action rating.
-            Complication: Severe problem, 3 tick or +2 Heat.
-            Harm: Severe Harm (level 3)`;
-    }
-}
-
-
-
 bot.on("message", (msg)=>{
 
     let content = msg.content.toLowerCase();
 
-    //Be very careful with using Default, lest it reply to everything.
+    //Be careful with using Default, lest it reply to everything.
     if(content[0] === '!'){
         switch(content){
             case "!controlled":
-                msg.reply( position("controlled") );
+                msg.reply( controlledEmbed );
                 break;
             case "!risky":
-                msg.reply( position("risky") );
+                msg.reply( riskyEmbed );
                 break;
             case "!desperate":
-                msg.reply( position("desperate") );
+                msg.reply( desperateEmbed );
                 break;
             case "!help":
                 msg.reply( helpEmbed );
+                break;
+            case "!position":
+            case "!effect":
+                msg.reply( posEmbed );
+                break;
+            case "!dice":
+                msg.reply( diceEmbed );
+                break;
+            case "!devilbargain":
+            case "!devil'sbargain":
+            case "!devilsbargain":
+            case "!bargain":
+                msg.reply( "Sorry to say, this feature isn't implemented yet");
+                break;
+            case "!group":
+                msg.reply(groupEmbed);
                 break;
             default:
                 msg.reply( roll(msg.content) );
@@ -163,7 +105,7 @@ bot.on("message", (msg)=>{
 
     }} else if( content === "/help"){
         msg.reply( helpEmbed );
-    }
+    } 
 })
 
 bot.login(token);
