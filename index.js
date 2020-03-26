@@ -6,6 +6,52 @@ bot.on('ready', ()=>{    console.log("This bot is online");  });
 
 const token = process.env.API_KEY
     
+const helpEmbed = new Discord.MessageEmbed();
+//Embed Setter.
+(function(){
+	helpEmbed
+	.setColor('#0099ff')
+	.setTitle('Help')
+	.setDescription(`Hey, I'm Blades in the Dicebot, here's how to use me:`)
+	.addFields(
+	{
+		name: `You say...`,
+		inline: true,
+		value: `! 2
+		! 2 r
+		! r 2  / comment
+		! resist 2d6`
+	},
+	{
+		name: `To...`,
+		inline: true,
+		value: `Roll 2 d6s.
+		Resistance roll of 2 d6s.
+		Add a comment.
+		Have a readable syntax.\n
+		`
+	},
+	{
+		name: `Show this message again:`,
+		value: `/help or !help`
+	},
+	{
+		name: `List possible consequences`,
+		value: `!controlled
+		!risky
+		!desperate`,
+		inline: true
+	},
+	{
+		inline: true,
+		name: `(For GMs)`,
+		value: `Lists consequences for Controlled
+		List consequences for Risky actions
+		Lists consequences for Desperate actions.`,
+	});
+}());
+
+
 const roll= (msg)=>{
     
     //Parsing comment
@@ -26,6 +72,7 @@ const roll= (msg)=>{
     const r = /[rR]/.test(msgString);
     const dice =  d || 2; //0d = roll 2 dice take lowest. Requires separate handling.
 
+    
     //Organising the array of dice results.
     let array = []
     for(i=1;i<=dice;i++){
@@ -35,8 +82,10 @@ const roll= (msg)=>{
 
     const num = d>0 ? array[0]: array[1]; //Take highest roll, or if 0d, take lowest of 2 rolls.
 
+
     //Structing the string for replying.
     const string = `${array.toString()}` + comment;
+
 
     if(r){ //Resistance roll handler
         if(d && array[1] === 6){
@@ -62,24 +111,21 @@ const roll= (msg)=>{
 const position = (pos) => {
     switch(pos){
         case "controlled":
-            return `Here are the possible outcomes for Controlled:
-            Reduced Effect: -1 effect level
+            return `Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Immediate problem, 1 tick or +1 Heat.
             Harm: Lesser Harm (level 1)`;
             
         case "risky":
-            return `Here are the possible outcomes for Risky:
-            Reduced Effect: -1 effect level
+            return `Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Immediate problem, 2 tick or +1 Heat.
             Harm: Moderate Harm (level 2)`;
             
         case "desperate":
-            return `Here are the possible outcomes for Desperate:
-            Reduced Effect: -1 effect level
+            return `Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Severe problem, 3 tick or +2 Heat.
@@ -91,37 +137,30 @@ const position = (pos) => {
 
 bot.on("message", (msg)=>{
 
-    //DO NOT ADD A DEFAULT CASE. THE BOT WOULD RESPOND TO ANY COMMENT, INCLUDING IT'S OWN COMMENTS RECURSIVELY.
-    //SERIOUSLY, DO NOT ADD A FRIGGIN DEFAULT
-    switch(true){
+    let content = msg.content.toLowerCase();
 
-        case (msg.content.toLowerCase() === "!controlled"):
-            msg.reply( position("controlled") );
-            break;
-        case (msg.content.toLowerCase() === "!risky"):
-            msg.reply( position("risky") );
-            break;
-        case (msg.content.toLowerCase() === "!desperate"):
-            msg.reply( position("desperate") );
-            break;
-        //roll handling
-        case (msg.content[0]=== "!"):
-            msg.reply( roll(msg.content) );
-            break;
-        case (msg.content.toLowerCase() === "/help"):
-            msg.reply(`I am a bot for Blades in the Dark. Here's how to use me:
-        ! 2                 The first number will make it roll that amount of d6s.
-        ! 2 r               Including the letter 'r' will make it perform a resistance roll.
-        ! r 2  / comment    Anything after the slash will be included as a comment.
-        ! 2d6 resist        Works as you'd expect.
-        
-        !controlled         Lists consequences for Controlled
-        !risky              Lists consequences for Risky actions
-        !desperate          Lists consequences for Desperate actions.
+    //Be very careful with using Default, lest it reply to everything.
+    if(content[0] === '!'){
+        switch(content){
+            case "!controlled":
+                msg.reply( position("controlled") );
+                break;
+            case "!risky":
+                msg.reply( position("risky") );
+                break;
+            case "!desperate":
+                msg.reply( position("desperate") );
+                break;
+            case "!help":
+                msg.reply( helpEmbed );
+                break;
+            default:
+                msg.reply( roll(msg.content) );
+                break;
 
-        /help               Makes me say repeat this message. :)`);
-            break;
+    }} else if( content === "/help"){
+        msg.reply( helpEmbed );
     }
-});
+})
 
 bot.login(token);
