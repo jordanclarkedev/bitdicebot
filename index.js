@@ -78,7 +78,7 @@ const roll= (msg)=>{
     for(i=1;i<=dice;i++){
         array.push( Math.floor( (Math.random() *6) +1 ));
     }
-    array.sort((a, b) => b - a).reverse();
+    array.sort((a, b) => b - a);
 
     const num = d>0 ? array[0]: array[1]; //Take highest roll, or if 0d, take lowest of 2 rolls.
 
