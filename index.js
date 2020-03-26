@@ -91,7 +91,8 @@ const position = (pos) => {
 
 bot.on("message", (msg)=>{
 
-    //DO NOT ADD DEFAULT. The bot would respond to literally everything.
+    //DO NOT ADD A DEFAULT CASE. THE BOT WOULD RESPOND TO ANY COMMENT, INCLUDING IT'S OWN COMMENTS RECURSIVELY.
+    //SERIOUSLY, DO NOT ADD A FRIGGIN DEFAULT
     switch(true){
 
         case (msg.content.toLowerCase() === "!controlled"):
