@@ -111,21 +111,24 @@ const roll= (msg)=>{
 const position = (pos) => {
     switch(pos){
         case "controlled":
-            return `Reduced Effect: -1 effect level
+            return `Consequences for Controlled:
+            Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Immediate problem, 1 tick or +1 Heat.
             Harm: Lesser Harm (level 1)`;
             
         case "risky":
-            return `Reduced Effect: -1 effect level
+            return `Consequences for Risky:
+            Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Immediate problem, 2 tick or +1 Heat.
             Harm: Moderate Harm (level 2)`;
             
         case "desperate":
-            return `Reduced Effect: -1 effect level
+            return `Consequences for Desperate:
+            Reduced Effect: -1 effect level
             Worse Position: -1 position (can try again if failure)
             Lost Opportunity: To try again, you'll need a new approach / action rating.
             Complication: Severe problem, 3 tick or +2 Heat.
