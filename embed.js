@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports.helpEmbed = new Discord.MessageEmbed()
+module.exports.help = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Help')
 	.setDescription(`Hey, I'm Blades in the Dicebot, here's how to use me:`)
@@ -43,7 +43,7 @@ module.exports.helpEmbed = new Discord.MessageEmbed()
 	},
 	{
 		name: `Devil's Bargain reference`,
-		value: `Give a couple suggestions for Devil's Bargains.`
+		value: `\` !bargain \` Give a couple suggestions for Devil's Bargains.`
 	},
 	{
 		inline: true,
@@ -61,7 +61,7 @@ module.exports.helpEmbed = new Discord.MessageEmbed()
 	);
 
 
-module.exports.posEmbed = new Discord.MessageEmbed()
+module.exports.position = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle("What's your Position & Effect?")
 	.setDescription(`Position and Effect are important to discuss with your GM. 
@@ -82,7 +82,9 @@ module.exports.posEmbed = new Discord.MessageEmbed()
 		`
 	});
 
-module.exports.diceEmbed = new Discord.MessageEmbed()
+module.exports.effect = module.exports.position;
+
+module.exports.dice = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Want extra dice?')
 	.setDescription(`You can gain extra dice for your roll. Push yourself, ask crewmembers for an assist, or the GM for a Devil's Bargain... Or you can ask me about Group Actions with !group`)
@@ -101,7 +103,7 @@ module.exports.diceEmbed = new Discord.MessageEmbed()
 		Ask your GM for details`
 	});
 
-module.exports.groupEmbed = new Discord.MessageEmbed()
+module.exports.group = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Group Actions')
 	.setDescription(`Teamwork makes the dreamwork! Pick one person to lead your group action. Anyone who wants to partake in the action can roll, and the highest result counts for the entire group! Anyone who fails (1-3) makes the leader suffer 1 stress`)
@@ -111,7 +113,7 @@ module.exports.groupEmbed = new Discord.MessageEmbed()
 		value: `If the group action results in consequences, the entire group may suffer the consequences; an easy way to TPK, if you're not cautious.`
 	});
 
-module.exports.controlledEmbed = new Discord.MessageEmbed()
+module.exports.controlled = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Controlled Consequences')
 	.setDescription(`Don't worry, you can always resist consequences to lower the severity of them!`)
@@ -133,7 +135,7 @@ module.exports.controlledEmbed = new Discord.MessageEmbed()
 			inline: true
 		})
 
-module.exports.riskyEmbed = new Discord.MessageEmbed()
+module.exports.risky = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Risky Consequences')
 	.setDescription(`Don't worry, you can always resist consequences to lower the severity of them!`)
@@ -157,7 +159,7 @@ module.exports.riskyEmbed = new Discord.MessageEmbed()
 		inline: true,
 	})
 
-module.exports.desperateEmbed = new Discord.MessageEmbed()
+module.exports.desperate = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Desperate Consequences')
 	.setDescription(`Don't worry, you can always resist consequences to lower the severity of them! Also, you get XP for Desperate actions!`)
@@ -181,7 +183,7 @@ module.exports.desperateEmbed = new Discord.MessageEmbed()
 
 	})
 
-module.exports.bargainEmbed = new Discord.MessageEmbed()
+module.exports.bargain = new Discord.MessageEmbed()
 .setColor('#0099ff')
 .setTitle(`Devil's Bargains`)
 .setDescription(`Can be proposed by GM or other player. +1d for accepting.`)
