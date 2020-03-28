@@ -40,7 +40,7 @@ const roll= (content)=>{
         }
     } else { // Action roll handler.
         switch(true){
-            case (d != 0 && highestResult === 6):
+            case (d != 0 && diceArray[1] === 6):
                 return `Critical!\n${replyString}`;
             case (highestResult === 6):
                 return `Success!\n${replyString}`;
