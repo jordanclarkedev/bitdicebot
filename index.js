@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 require('dotenv').config(); 
-const { helpEmbed, posEmbed, diceEmbed, groupEmbed, controlledEmbed, riskyEmbed, desperateEmbed} = require('./embeds.js'); 
+const { helpEmbed, posEmbed, diceEmbed, groupEmbed, controlledEmbed, riskyEmbed, desperateEmbed} = require('./strings.js'); 
 
 bot.on('ready', ()=>{    console.log("This bot is online");  });
 
