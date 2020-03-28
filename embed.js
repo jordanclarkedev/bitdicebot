@@ -28,9 +28,9 @@ module.exports.helpEmbed = new Discord.MessageEmbed()
 	{
 		name: `Basic mechanics`,
 		value: `\` !dice \`
-		\`!position \`
-		\`!effect \`
-		\`!group \``,
+		\` !position \`
+		\` !effect \`
+		\` !group \``,
 		inline: true
 	},
 	{
@@ -43,7 +43,7 @@ module.exports.helpEmbed = new Discord.MessageEmbed()
 	},
 	{
 		name: `Devil's Bargain reference`,
-		value: `Coming Soon...`
+		value: `Give a couple suggestions for Devil's Bargains.`
 	},
 	{
 		inline: true,
