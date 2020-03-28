@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 require('dotenv').config(); 
-const { helpEmbed, posEmbed, diceEmbed, groupEmbed, controlledEmbed, riskyEmbed, desperateEmbed} = require('./embed.js'); 
+const { helpEmbed, posEmbed, diceEmbed, groupEmbed, controlledEmbed, riskyEmbed, desperateEmbed, bargainEmbed} = require('./embed.js'); 
 
 bot.on('ready', ()=>{    console.log("This bot is online");  });
 
@@ -94,7 +94,7 @@ bot.on("message", (msg)=>{
             case "!devil'sbargain":
             case "!devilsbargain":
             case "!bargain":
-                msg.reply( "Sorry to say, this feature isn't implemented yet");
+                msg.reply( bargainEmbed );
                 break;
             case "!group":
                 msg.reply(groupEmbed);

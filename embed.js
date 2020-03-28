@@ -180,3 +180,18 @@ module.exports.desperateEmbed = new Discord.MessageEmbed()
 		inline: true,
 
 	})
+
+module.exports.bargainEmbed = new Discord.MessageEmbed()
+.setColor('#0099ff')
+.setTitle(`Devil's Bargains`)
+.setDescription(`Can be proposed by GM or other player. +1d for accepting.`)
+.addFields({
+	name: `Some suggested bargains`,
+	value: `Collateral damage, unintended harm.
+	- Sacrifice COIN or an item.
+	- Betray a friend or loved one.
+	- Offend or anger a faction.
+	- Start and/or tick a troublesome clock.
+	- Add HEAT to the crew from evidence or witnesses.
+	- Suffer harm.`,
+});

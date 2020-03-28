@@ -73,3 +73,14 @@ Don't worry, you can always resist consequences to lower the severity of them! A
 **Lost Opportunity**: Try again with a new action
 **Complication**: Severe problem, 3 ticks or +2 Heat
 **Harm**: Severe Harm (level 3)`
+
+module.exports.bargainEmbed = `**Devil's Bargains**
+Can be proposed by GM or other player. +1d for accepting. Here are some suggested ones:
+
+- Collateral damage, unintended harm.
+- Sacrifice COIN or an item.
+- Betray a friend or loved one.
+- Offend or anger a faction.
+- Start and/or tick a troublesome clock.
+- Add HEAT to the crew from evidence or witnesses.
+- Suffer harm.`
