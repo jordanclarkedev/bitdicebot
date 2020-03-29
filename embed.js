@@ -189,7 +189,7 @@ module.exports.bargain = new Discord.MessageEmbed()
 .setDescription(`Can be proposed by GM or other player. +1d for accepting.`)
 .addFields({
 	name: `Some suggested bargains`,
-	value: `Collateral damage, unintended harm.
+	value: `- Collateral damage, unintended harm.
 	- Sacrifice COIN or an item.
 	- Betray a friend or loved one.
 	- Offend or anger a faction.
