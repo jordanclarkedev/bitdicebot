@@ -55,7 +55,7 @@ const roll= (content)=>{
 bot.on("message", (msg)=>{
 
     if(msg.content[0] === '!'){
-        let content = msg.content.toLowerCase().slice(1).replace(/\s+/g, '');;
+        let content = msg.content.toLowerCase().slice(1);;
         if(obj[content]){
             msg.reply( obj[content] );
         } 
