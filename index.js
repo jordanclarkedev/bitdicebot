@@ -5,7 +5,7 @@ const obj = require('./embed.js');
 
 bot.on('ready', ()=>{    console.log("This bot is online");  });
 
-const token = process.env.API_KEY
+const token = process.env.API_KEY;
 
 
 const roll= (content)=>{
@@ -55,7 +55,7 @@ const roll= (content)=>{
 bot.on("message", (msg)=>{
 
     if(msg.content[0] === '!'){
-        let content = msg.content.toLowerCase().slice(1);;
+        let content = msg.content.toLowerCase().slice(1);
         if(obj[content]){
             msg.reply( obj[content] );
         } 
