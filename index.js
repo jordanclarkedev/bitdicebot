@@ -17,7 +17,7 @@ const roll = (content) => {
 		contentString = content.slice(0, content.indexOf("/"));
 		comment = "\n/ " + content.slice(content.indexOf("/") + 1);
 	}
-	const d = Number(/[0-9]+/.exec(contentString)[0]);
+	let d = Number(/[0-9]+/.exec(contentString)[0]);
 	if( d > 20 ){ 
 		d = 20;
 		comment += "\nI'm limited to rolling 20 dice at a time. I hope you don't mind!"
