@@ -18,6 +18,10 @@ const roll = (content) => {
 		comment = "\n/ " + content.slice(content.indexOf("/") + 1);
 	}
 	const d = Number(/[0-9]+/.exec(contentString)[0]);
+	if( d > 20 ){ 
+		d = 20;
+		comment += "\nI'm limited to rolling 20 dice at a time. I hope you don't mind!"
+	}
 	const resist = /[rR]/.test(contentString);
 	const dice = d || 2; //0d = roll 2 dice take lowest. Requires separate handling.
 
