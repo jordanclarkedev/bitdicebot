@@ -11,6 +11,7 @@ const token = process.env.API_KEY;
 
 const roll = {
 	parse(content) {
+		//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
 		const data = {};
 
 		if (content.includes("/")) {
@@ -39,9 +40,9 @@ const roll = {
 			data.rolls.push(Math.floor(Math.random() * 6 + 1));
 		}
 		if (data.d === 0) {
-			return this.zeroHandle(data);
+			return this.zeroHandle(data); //Roll 2d, take lowest
 		} else {
-			return this.manyHandle(data);
+			return this.manyHandle(data); //Take highest of rolls
 		}
 	},
 
@@ -60,14 +61,16 @@ const roll = {
 	manyHandle(data) {
 		data.rolls.forEach((value, index) => {
 			if (value > data.result) {
+				//Stores highest roll + the index of it.
 				data.result = value;
 				data.index = index;
 			} else if (value === 6 && data.result === 6) {
-				data.rolls[value] = "**6**";
+				//Bolds duplicate 6s if they exist (crit handling).
+				data.rolls[index] = "**6**";
 				data.crit = true;
 			}
 		});
-		data.rolls[data.index] = `**${data.result}**`;
+		data.rolls[data.index] = `**${data.result}**`; //Bolds the highest roll.
 
 		return this.commenter(data);
 	},
@@ -76,22 +79,32 @@ const roll = {
 		let replyString = `[**${data.result}**] `;
 
 		if (data.d !== 1) {
-			replyString += `from ${data.rolls.join(", ")}`;
+			replyString += `from ${data.rolls.join(", ")}`; //Doesn't bother with displaying roll array if 1d.
 		}
 
 		if (data.comment) {
 			replyString += data.comment;
 		}
 
-		switch (true) {
-			case data.crit:
-				return `**Critical!**\n${replyString}`;
-			case data.result === 6:
-				return `**Success!**\n${replyString}`;
-			case data.result >= 4:
-				return `**Partial!**\n${replyString}`;
-			case data.result <= 3:
-				return `**Failure!**\n${replyString}`;
+		if (data.resist) {
+			//Resistance rolls
+			if (data.crit) {
+				return `**Critical!** Recover 1 stress\n${replyString}`;
+			} else {
+				return `**Take ${6 - data.result} stress!**\n${replyString}`;
+			}
+		} else {
+			//Action rolls
+			switch (true) {
+				case data.crit:
+					return `**Critical!**\n${replyString}`;
+				case data.result === 6:
+					return `**Success!**\n${replyString}`;
+				case data.result >= 4:
+					return `**Partial!**\n${replyString}`;
+				case data.result <= 3:
+					return `**Failure!**\n${replyString}`;
+			}
 		}
 	},
 };
