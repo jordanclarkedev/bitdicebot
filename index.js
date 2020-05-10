@@ -48,8 +48,10 @@ const roll = {
 	zeroHandle(data) {
 		if (data.rolls[0] > data.rolls[1]) {
 			data.result = data.rolls[1];
+			data.rolls[1] = `**${data.result}**`;
 		} else {
 			data.result = data.rolls[0];
+			data.rolls[0] = `**${data.result}**`;
 		}
 
 		return this.commenter(data);
@@ -61,16 +63,21 @@ const roll = {
 				data.result = value;
 				data.index = index;
 			} else if (value === 6 && data.result === 6) {
+				data.rolls[value] = "**6**";
 				data.crit = true;
 			}
 		});
-		data.rolls[data.index] = `${data.result}`;
+		data.rolls[data.index] = `**${data.result}**`;
 
 		return this.commenter(data);
 	},
 
 	commenter(data) {
-		let replyString = `[${data.result}] from ${data.rolls.toString()}`;
+		let replyString = `[**${data.result}**] `;
+
+		if (data.d !== 1) {
+			replyString += `from ${data.rolls.join(", ")}`;
+		}
 
 		if (data.comment) {
 			replyString += data.comment;
