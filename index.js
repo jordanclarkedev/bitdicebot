@@ -9,54 +9,84 @@ bot.on("ready", () => {
 
 const token = process.env.API_KEY;
 
-const roll = (content) => {
-	//Organising user's text.
-	let contentString = content;
-	let comment = "";
-	if (content.includes("/")) {
-		contentString = content.slice(0, content.indexOf("/"));
-		comment = "\n/ " + content.slice(content.indexOf("/") + 1);
-	}
-	const d = Number(/[0-9]+/.exec(contentString)[0]);
-	if( d > 20 ){ 
-		d = 20;
-		comment += "\nI'm limited to rolling 20 dice at a time. I hope you don't mind!"
-	}
-	const resist = /[rR]/.test(contentString);
-	const dice = d || 2; //0d = roll 2 dice take lowest. Requires separate handling.
+const roll = {
+	parse(content) {
+		const data = {};
 
-	//Organising dice results.
-	let diceArray = [];
-	for (i = 1; i <= dice; i++) {
-		diceArray.push(Math.floor(Math.random() * 6 + 1));
-	}
-	diceArray.sort((a, b) => b - a);
+		if (content.includes("/")) {
+			data.comment = "\n/ " + content.slice(content.indexOf("/") + 1) || "";
+		}
+		data.d = Number(/[0-9]+/.exec(content)[0]);
+		data.resist = /[rR]/.test(content);
 
-	const highestResult = d > 0 ? diceArray[0] : diceArray[1]; //Take highest roll, or if 0d, take lowest of 2 rolls.
+		if (data.d > 20) {
+			data.d = 20;
+			data.dice = 20;
+			data.comment +=
+				"\nI'm limited to rolling 20 dice at a time. I hope you don't mind!";
+		}
+		data.dice = data.d || 2;
 
-	//Organising response string.
-	const replyString = `${diceArray.toString()}` + comment;
+		return this.roller(data);
+	},
 
-	if (resist) {
-		//Resistance roll handler
-		if (d != 0 && diceArray[1] === 6) {
-			return `Critical! Recover 1 stress!\n${replyString}`;
+	roller(data) {
+		data.rolls = [];
+		data.index = 0;
+		data.result = 0;
+
+		for (i = 1; i <= data.dice; i++) {
+			data.rolls.push(Math.floor(Math.random() * 6 + 1));
+		}
+		if (data.d === 0) {
+			return this.zeroHandle(data);
 		} else {
-			return `Take ${6 - highestResult} stress\n${replyString}`;
+			return this.manyHandle(data);
 		}
-	} else {
-		// Action roll handler.
+	},
+
+	zeroHandle(data) {
+		if (data.rolls[0] > data.rolls[1]) {
+			data.result = data.rolls[1];
+		} else {
+			data.result = data.rolls[0];
+		}
+
+		return this.commenter(data);
+	},
+
+	manyHandle(data) {
+		data.rolls.forEach((value, index) => {
+			if (value > data.result) {
+				data.result = value;
+				data.index = index;
+			} else if (value === 6 && data.result === 6) {
+				data.crit = true;
+			}
+		});
+		data.rolls[data.index] = `${data.result}`;
+
+		return this.commenter(data);
+	},
+
+	commenter(data) {
+		let replyString = `[${data.result}] from ${data.rolls.toString()}`;
+
+		if (data.comment) {
+			replyString += data.comment;
+		}
+
 		switch (true) {
-			case d != 0 && diceArray[1] === 6:
-				return `Critical!\n${replyString}`;
-			case highestResult === 6:
-				return `Success!\n${replyString}`;
-			case highestResult >= 4:
-				return `Partial!\n${replyString}`;
-			case highestResult <= 3:
-				return `Failure!\n${replyString}`;
+			case data.crit:
+				return `**Critical!**\n${replyString}`;
+			case data.result === 6:
+				return `**Success!**\n${replyString}`;
+			case data.result >= 4:
+				return `**Partial!**\n${replyString}`;
+			case data.result <= 3:
+				return `**Failure!**\n${replyString}`;
 		}
-	}
+	},
 };
 
 bot.on("message", (msg) => {
@@ -73,7 +103,7 @@ bot.on("message", (msg) => {
 				);
 			});
 		} else if (/[0-9]/.test(content)) {
-			let reply = roll(content);
+			let reply = roll.parse(content);
 
 			msg.reply(reply).catch((error) => {
 				console.log(error);
