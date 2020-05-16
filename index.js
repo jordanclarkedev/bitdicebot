@@ -13,6 +13,7 @@ const roll = {
 	parse(content) {
 		//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
 		const data = {};
+		data.comment = ""; //Avoids concat "undefined" with "\n I'm limited...."
 
 		if (content.includes("/")) {
 			data.comment = "\n/ " + content.slice(content.indexOf("/") + 1) || "";
@@ -22,7 +23,6 @@ const roll = {
 
 		if (data.d > 20) {
 			data.d = 20;
-			data.dice = 20;
 			data.comment +=
 				"\nI'm limited to rolling 20 dice at a time. I hope you don't mind!";
 		}
@@ -32,6 +32,7 @@ const roll = {
 	},
 
 	roller(data) {
+		//Rolling dice into rolls[]
 		data.rolls = [];
 		data.index = 0;
 		data.result = 0;
@@ -47,6 +48,7 @@ const roll = {
 	},
 
 	zeroHandle(data) {
+		//Handling 0d rolls (roll 2, take lowest)
 		if (data.rolls[0] > data.rolls[1]) {
 			data.result = data.rolls[1];
 			data.rolls[1] = `**${data.result}**`;
@@ -59,6 +61,7 @@ const roll = {
 	},
 
 	manyHandle(data) {
+		//Default roll handler
 		data.rolls.forEach((value, index) => {
 			if (value > data.result) {
 				//Stores highest roll + the index of it.
@@ -70,12 +73,13 @@ const roll = {
 				data.crit = true;
 			}
 		});
-		data.rolls[data.index] = `**${data.result}**`; //Bolds the highest roll.
+		data.rolls[data.index] = `**${data.result}**`; //Bolds the first occurence of highest roll.
 
 		return this.commenter(data);
 	},
 
 	commenter(data) {
+		//Formatting reply
 		let replyString = `[**${data.result}**] `;
 
 		if (data.d !== 1) {
