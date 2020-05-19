@@ -16,10 +16,11 @@ const roll = {
 		data.comment = ""; //Avoids concat "undefined" with "\n I'm limited...."
 
 		if (content.includes("/")) {
+			data.content = content.slice(0, content.indexOf("/"));
 			data.comment = "\n/ " + content.slice(content.indexOf("/") + 1) || "";
 		}
-		data.d = Number(/[0-9]+/.exec(content)[0]);
-		data.resist = /[rR]/.test(content);
+		data.d = Number(/[0-9]+/.exec(data.content)[0]);
+		data.resist = /[rR]/.test(data.content);
 
 		if (data.d > 20) {
 			data.d = 20;
