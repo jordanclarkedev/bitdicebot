@@ -3,27 +3,27 @@ const Discord = require("discord.js");
 module.exports.help = new Discord.MessageEmbed()
 	.setColor("#0099ff")
 	.setTitle("Help")
-	.setDescription(`Hey, I'm Blades in the Dicebot, here's how to use me:`)
+	.setDescription(
+		`Hey, I'm Blades in the Dicebot. Due to potential conflict with other bots, I've had my syntax tightened up to the following:`
+	)
 	.addFields(
 		{
 			name: `You say...`,
 			inline: true,
-			value: `\` ! 2 \`
-		\` ! 2 r \`
-		\` ! r 2  / comment \`
-		\` ! resist 2d6 \``,
+			value: `\` !2 \`
+		\` !3r \`
+		\` !2r /comment \``,
 		},
 		{
 			name: `To...`,
 			inline: true,
 			value: `Roll 2 d6s.
-		Resistance roll of 2 d6s.
-		Add a comment.
-		Works and looks nice. :)`,
+		Resistance roll of 3 d6s.
+		Add a comment.`,
 		},
 		{
 			name: `Show this message again:`,
-			value: `/help or !help`,
+			value: `\` !help \` `,
 		},
 		{
 			name: `Basic mechanics`,
@@ -35,7 +35,7 @@ module.exports.help = new Discord.MessageEmbed()
 		},
 		{
 			inline: true,
-			name: `for newbies`,
+			name: `to help out`,
 			value: `Lists how to get extra dice.
 		Explains position & effect.
 		Also works.

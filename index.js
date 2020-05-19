@@ -10,30 +10,36 @@ bot.on("ready", () => {
 const token = process.env.API_KEY;
 
 const roll = {
+	//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
 	parse(content) {
-		//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
 		const data = {};
-		data.comment = ""; //Avoids concat "undefined" with "\n I'm limited...."
 
+		//Comment handing
+		data.comment = ""; //Avoids concat "undefined" with "\n I'm limited...."
 		if (content.includes("/")) {
-			data.content = content.slice(0, content.indexOf("/"));
 			data.comment = "\n/ " + content.slice(content.indexOf("/") + 1) || "";
 		}
-		data.d = Number(/[0-9]+/.exec(data.content)[0]);
-		data.resist = /[rR]/.test(data.content);
 
+		//Calculates number of dice to roll.
+		data.d = Number(/^\d+/.exec(content)); //Number must immediately follow !, can be many digits.
 		if (data.d > 20) {
 			data.d = 20;
 			data.comment +=
 				"\nI'm limited to rolling 20 dice at a time. I hope you don't mind!";
 		}
-		data.dice = data.d || 2;
+		data.dice = data.d || 2; //Handles 0d rolls.
+
+		//Resist checker
+		if (content.toLowerCase().slice(data.d.toString().length) === "r") {
+			data.resist = true;
+		}
 
 		return this.roller(data);
 	},
 
+	//Generates random numbers
 	roller(data) {
-		//Rolling dice into rolls[]
+		//Rolling dice into data.rolls[]
 		data.rolls = [];
 		data.index = 0;
 		data.result = 0;
@@ -44,12 +50,12 @@ const roll = {
 		if (data.d === 0) {
 			return this.zeroHandle(data); //Roll 2d, take lowest
 		} else {
-			return this.manyHandle(data); //Take highest of rolls
+			return this.manyHandle(data); //Take highest of data.rolls
 		}
 	},
 
+	//Handling 0d rolls (roll 2, take lowest)
 	zeroHandle(data) {
-		//Handling 0d rolls (roll 2, take lowest)
 		if (data.rolls[0] > data.rolls[1]) {
 			data.result = data.rolls[1];
 			data.rolls[1] = `**${data.result}**`;
@@ -61,8 +67,8 @@ const roll = {
 		return this.commenter(data);
 	},
 
+	//Default roll handler
 	manyHandle(data) {
-		//Default roll handler
 		data.rolls.forEach((value, index) => {
 			if (value > data.result) {
 				//Stores highest roll + the index of it.
@@ -79,8 +85,8 @@ const roll = {
 		return this.commenter(data);
 	},
 
+	//Formatting reply string.
 	commenter(data) {
-		//Formatting reply
 		let replyString = `[**${data.result}**] `;
 
 		if (data.d !== 1) {
@@ -116,7 +122,7 @@ const roll = {
 
 bot.on("message", (msg) => {
 	if (msg.content[0] === "!") {
-		let content = msg.content.toLowerCase().slice(1);
+		let content = msg.content.slice(1);
 
 		if (obj[content]) {
 			msg.reply(obj[content]).catch((error) => {
@@ -127,7 +133,7 @@ bot.on("message", (msg) => {
 						"*"
 				);
 			});
-		} else if (/[0-9]/.test(content)) {
+		} else if (Number(content[0])) {
 			let reply = roll.parse(content);
 
 			msg.reply(reply).catch((error) => {
@@ -139,10 +145,6 @@ bot.on("message", (msg) => {
 				);
 			});
 		}
-	}
-
-	if (msg.content === "/help") {
-		msg.reply(obj["help"]);
 	}
 });
 
