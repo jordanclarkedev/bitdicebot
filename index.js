@@ -5,9 +5,11 @@ const obj = require("./embed.js");
 
 bot.on("ready", () => {
 	console.log("This bot is online");
+	console.log(`The prefix is '${prefix}'`);
 });
 
 const token = process.env.API_KEY;
+const prefix = process.env.BOT_PREFIX || "!";
 
 const roll = {
 	//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
@@ -121,8 +123,8 @@ const roll = {
 };
 
 bot.on("message", (msg) => {
-	if (msg.content[0] === "!") {
-		let content = msg.content.slice(1);
+	if (msg.content.length > prefix.length && msg.content.slice(0,prefix.length) === prefix) {
+		let content = msg.content.slice(prefix.length);
 
 		if (obj[content]) {
 			msg.reply(obj[content]).catch((error) => {
