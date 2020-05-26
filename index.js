@@ -135,7 +135,7 @@ bot.on("message", (msg) => {
 						"*"
 				);
 			});
-		} else if (Number(content[0])) {
+		} else if (!isNaN(content[0])) {
 			let reply = roll.parse(content);
 
 			msg.reply(reply).catch((error) => {
