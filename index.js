@@ -16,6 +16,8 @@ const roll = {
 	parse(content) {
 		const data = {};
 
+		data.statement = content;
+		
 		//Comment handing
 		data.comment = ""; //Avoids concat "undefined" with "\n I'm limited...."
 		if (content.includes("/")) {
@@ -32,7 +34,7 @@ const roll = {
 		data.dice = data.d || 2; //Handles 0d rolls.
 
 		//Resist checker
-		if (content.toLowerCase().slice(data.d.toString().length) === "r") {
+		if (data.statement.toLowerCase().includes("r")) {
 			data.resist = true;
 		}
 
