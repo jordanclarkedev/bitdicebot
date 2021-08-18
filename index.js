@@ -12,7 +12,7 @@ const token = process.env.API_KEY;
 const prefix = process.env.BOT_PREFIX || "!";
 
 const roll = {
-	//Parsing the user's string. Obtaining dice number (max 20), resist bool, comment.
+	//Parsing the user's string. Obtaining dice number (max 10), resist bool, comment.
 	parse(content) {
 		const data = {};
 
@@ -26,10 +26,10 @@ const roll = {
 
 		//Calculates number of dice to roll.
 		data.d = Number(/^\d+/.exec(content)); //Number must immediately follow !, can be many digits.
-		if (data.d > 20) {
-			data.d = 20;
+		if (data.d > 10) {
+			data.d = 10;
 			data.comment +=
-				"\nI'm limited to rolling 20 dice at a time. I hope you don't mind!";
+				"\nI'm limited to rolling 10 dice at a time.";
 		}
 		data.dice = data.d || 2; //Handles 0d rolls.
 
@@ -104,9 +104,16 @@ const roll = {
 		if (data.resist) {
 			//Resistance rolls
 			if (data.crit) {
-				return `**Critical!** Recover 1 stress\n${replyString}`;
+				return `**Critical!** Recover 1 Willpower!\n${replyString}`;
 			} else {
-				return `**Take ${6 - data.result} stress!**\n${replyString}`;
+				switch (true) {
+					case data.result === 6:
+						return `**Spend no Willpower!**\n${replyString}`;
+					case data.result >= 4:
+						return `**Spend 1 Willpower!**\n${replyString}`;
+					case data.result <= 3:
+						return `**Spend 3 Willpower!**\n${replyString}`;
+				}
 			}
 		} else {
 			//Action rolls
