@@ -1,7 +1,7 @@
 {
-	"name": "bitdbot",
+	"name": "combot",
 	"version": "1.1.4",
-	"description": "A dice rolling bot for Blades in The Dark games over Discord.",
+	"description": "A dice rolling bot for Children of Midnight (Blades in The Dark hack) games over Discord.",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
